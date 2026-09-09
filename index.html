@@ -13,11 +13,11 @@
     --panel:#FFFFFF;
     --ink:#20242A;
     --ink-soft:#565D66;
-    --teal:#137880;
-    --teal-deep:#0E5B62;
-    --teal-light:#4FB6B0;
-    --teal-pale:#DCEEEC;
-    --line: rgba(19,120,128,0.35);
+    --teal:#0055A5;
+    --teal-deep:#003E7A;
+    --teal-light:#00A3E0;
+    --teal-pale:#DCEEFA;
+    --line: rgba(0,85,165,0.35);
     --radius: 14px;
     --maxw: 1120px;
   }
@@ -53,7 +53,8 @@
   }
   a{color:inherit;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
-  img.logo-mark{height:34px; width:auto; display:block;}
+  .logo-mark{height:34px; width:auto; display:block; flex-shrink:0;}
+  footer .logo-mark{height:22px;}
 
   /* ---------- NAV ---------- */
   nav{
@@ -67,7 +68,6 @@
     height:64px;
   }
   .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:1.05rem;}
-  .brand .dot-i{color:var(--teal);}
   nav .links{display:flex; gap:28px; font-size:0.92rem; color:var(--ink-soft);}
   nav .links a{transition:color .15s;}
   nav .links a:hover{color:var(--teal-deep);}
@@ -203,7 +203,7 @@
   .process .section-head h2, .process .section-head p{color:#F3F1EA;}
   .process .section-head p{color:#B7BFC6;}
   .process .eyebrow{color:var(--teal-light);}
-  .process .eyebrow::before{background:var(--teal-light); box-shadow:0 0 0 3px rgba(79,182,176,0.25);}
+  .process .eyebrow::before{background:var(--teal-light); box-shadow:0 0 0 3px rgba(0,163,224,0.25);}
   .steps{
     display:grid; grid-template-columns:repeat(4,1fr); gap:0;
     position:relative;
@@ -211,7 +211,7 @@
   .steps::before{
     content:'';
     position:absolute; top:17px; left:6%; right:6%; height:2px;
-    background:repeating-linear-gradient(to right, rgba(79,182,176,0.4) 0 6px, transparent 6px 12px);
+    background:repeating-linear-gradient(to right, rgba(0,163,224,0.4) 0 6px, transparent 6px 12px);
   }
   .step{position:relative; padding-right:20px;}
   .step .num{
@@ -263,7 +263,7 @@
   .price-card.featured{
     background:var(--panel);
     border:2px solid var(--teal);
-    box-shadow: 0 8px 24px rgba(19,120,128,0.08);
+    box-shadow: 0 8px 24px rgba(0,85,165,0.08);
   }
   .price-card .badge{
     position:absolute; top:-12px; right:20px;
@@ -371,7 +371,16 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand"><span class="dot-i"></span>AIT Solutions</div>
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 95 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g transform="translate(10, 15)">
+          <path d="M 10 90 L 45 15 L 62 15 L 40 90 Z" fill="#0055A5"/>
+          <path d="M 42 45 L 75 90 H 58 L 37 62 Z" fill="#00A3E0"/>
+          <circle cx="58" cy="90" r="6" fill="#0055A5"/>
+        </g>
+      </svg>
+      AIT Solutions
+    </div>
     <div class="links">
       <a href="#producto">TCG Eventos</a>
       <a href="#servicios">Servicios</a>
@@ -396,18 +405,14 @@
     </div>
     <div class="hero-visual" aria-hidden="true">
       <svg viewBox="0 0 300 300">
-        <circle cx="150" cy="150" r="118" fill="none" stroke="#DCEEEC" stroke-width="2"/>
-        <path d="M150 32 L150 90 Q150 110 170 110 L215 110 Q235 110 235 130 L235 175"
-              fill="none" stroke="#137880" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="150" cy="32" r="6" fill="#137880"/>
-        <circle cx="215" cy="110" r="5" fill="#4FB6B0"/>
-        <circle cx="235" cy="175" r="6" fill="#0E5B62"/>
-        <path d="M150 268 L150 210 Q150 190 130 190 L90 190 Q70 190 70 170 L70 140"
-              fill="none" stroke="#137880" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
-        <circle cx="150" cy="268" r="6" fill="#137880" opacity="0.55"/>
-        <circle cx="90" cy="190" r="5" fill="#4FB6B0" opacity="0.55"/>
-        <circle cx="70" cy="140" r="6" fill="#0E5B62" opacity="0.55"/>
-        <text x="150" y="162" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="54" fill="#20242A">a</text>
+        <circle cx="150" cy="150" r="118" fill="none" stroke="#DCEEFA" stroke-width="2"/>
+        <g transform="translate(72.4,45.8) scale(1.478)">
+          <g transform="translate(10, 15)">
+            <path d="M 10 90 L 45 15 L 62 15 L 40 90 Z" fill="#0055A5"/>
+            <path d="M 42 45 L 75 90 H 58 L 37 62 Z" fill="#00A3E0"/>
+            <circle cx="58" cy="90" r="6" fill="#0055A5"/>
+          </g>
+        </g>
       </svg>
     </div>
   </div>
@@ -635,7 +640,7 @@
         <h2>Cuéntanos qué necesita tu equipo</h2>
         <p class="lead">Respondemos en menos de 24h laborables con los siguientes pasos.</p>
         <ul class="contact-list">
-          <li>hola@aitsolutions.es</li>
+          <li>cristian.vegara.garcia@gmail.com</li>
           <li>+34 600 000 000</li>
           <li>Alicante, España · remoto</li>
         </ul>
@@ -661,7 +666,16 @@
 
 <footer>
   <div class="wrap">
-    <div class="brand"><span class="dot-i" style="color:var(--teal)"></span>AIT Solutions</div>
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 95 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g transform="translate(10, 15)">
+          <path d="M 10 90 L 45 15 L 62 15 L 40 90 Z" fill="#0055A5"/>
+          <path d="M 42 45 L 75 90 H 58 L 37 62 Z" fill="#00A3E0"/>
+          <circle cx="58" cy="90" r="6" fill="#0055A5"/>
+        </g>
+      </svg>
+      AIT Solutions
+    </div>
     <p>© 2026 AIT Solutions — Consultoría IT & Software a medida</p>
   </div>
 </footer>
