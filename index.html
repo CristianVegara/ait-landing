@@ -341,6 +341,10 @@
   }
   textarea{resize:vertical; min-height:88px;}
   form .btn.solid{align-self:flex-start; margin-top:6px; border:none; cursor:pointer;}
+  form .btn.solid:disabled{opacity:0.7; cursor:default;}
+  .form-status{font-size:0.85rem; margin-top:4px; min-height:1.2em;}
+  .form-status.error{color:#B3261E;}
+  .form-status.ok{color:var(--teal-deep);}
 
   footer{padding:40px 0 56px; border-top:1px solid rgba(32,36,42,0.08); margin-top:40px;}
   footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
@@ -653,20 +657,23 @@
           <li>Alicante, España · remoto</li>
         </ul>
       </div>
-      <form onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Enviado ✓';">
+      <form id="contact-form">
+        <input type="hidden" name="access_key" value="PON_AQUI_TU_ACCESS_KEY_DE_WEB3FORMS">
+        <input type="hidden" name="subject" value="Nuevo contacto desde aitsolutions.es">
         <div>
           <label for="nombre">Nombre</label>
-          <input id="nombre" type="text" required>
+          <input id="nombre" name="name" type="text" required>
         </div>
         <div>
           <label for="email">Email</label>
-          <input id="email" type="email" required>
+          <input id="email" name="email" type="email" required>
         </div>
         <div>
           <label for="mensaje">¿Qué necesitas?</label>
-          <textarea id="mensaje" required></textarea>
+          <textarea id="mensaje" name="message" required></textarea>
         </div>
         <button class="btn solid" type="submit">Enviar mensaje</button>
+        <p class="form-status" aria-live="polite"></p>
       </form>
     </div>
   </div>
@@ -687,6 +694,42 @@
     <p>© 2026 AIT Solutions — Consultoría IT & Software a medida</p>
   </div>
 </footer>
+
+<script>
+  const contactForm = document.getElementById('contact-form');
+  const formStatus = contactForm.querySelector('.form-status');
+  const submitBtn = contactForm.querySelector('.btn.solid');
+  const submitLabel = submitBtn.textContent;
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(contactForm))),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message || 'Error al enviar');
+
+      submitBtn.textContent = 'Enviado ✓';
+      formStatus.textContent = 'Gracias, te responderé en menos de 24h laborables.';
+      formStatus.classList.add('ok');
+      contactForm.reset();
+      setTimeout(() => { submitBtn.textContent = submitLabel; submitBtn.disabled = false; }, 4000);
+    } catch (err) {
+      submitBtn.textContent = submitLabel;
+      submitBtn.disabled = false;
+      formStatus.textContent = 'No se pudo enviar. Escríbeme directamente a cristian.vegara.garcia@gmail.com.';
+      formStatus.classList.add('error');
+    }
+  });
+</script>
 
 </body>
 </html>
