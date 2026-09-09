@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIT Solutions — Consultoría IT & Software a medida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F1EA;
+    --panel:#FFFFFF;
+    --ink:#20242A;
+    --ink-soft:#565D66;
+    --teal:#137880;
+    --teal-deep:#0E5B62;
+    --teal-light:#4FB6B0;
+    --teal-pale:#DCEEEC;
+    --line: rgba(19,120,128,0.35);
+    --radius: 14px;
+    --maxw: 1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal-deep);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px;height:7px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 3px var(--teal-pale);
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  img.logo-mark{height:34px; width:auto; display:block;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,241,234,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid rgba(32,36,42,0.08);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:1.05rem;}
+  .brand .dot-i{color:var(--teal);}
+  nav .links{display:flex; gap:28px; font-size:0.92rem; color:var(--ink-soft);}
+  nav .links a{transition:color .15s;}
+  nav .links a:hover{color:var(--teal-deep);}
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:0.88rem;
+    padding:10px 20px;
+    border-radius:100px;
+    border:1px solid var(--teal);
+    color:var(--teal-deep);
+    background:transparent;
+    cursor:pointer;
+    transition:all .18s ease;
+    display:inline-block;
+    text-align:center;
+  }
+  .btn.solid{background:var(--teal); color:#fff; border-color:var(--teal);}
+  .btn.solid:hover{background:var(--teal-deep); border-color:var(--teal-deep);}
+  .btn:hover{background:var(--teal-pale);}
+  .btn:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--teal-deep); outline-offset:3px;
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:96px 0 80px;}
+  .hero-grid{
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap:56px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.2vw, 3.4rem);
+    line-height:1.08;
+    margin:18px 0 20px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--teal-deep);
+    position:relative;
+  }
+  .hero p.lead{
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin-bottom:32px;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-visual{
+    position:relative;
+    aspect-ratio: 1/1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-visual svg{width:100%; height:100%;}
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{
+    border-top:1px solid rgba(32,36,42,0.08);
+    border-bottom:1px solid rgba(32,36,42,0.08);
+    padding:22px 0;
+  }
+  .trust .wrap{
+    display:flex; gap:40px; flex-wrap:wrap; justify-content:space-between;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--ink-soft);
+  }
+  .trust b{color:var(--ink); font-weight:600;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem); margin-top:14px;}
+  .section-head p{color:var(--ink-soft); margin-top:14px; font-size:1.02rem;}
+
+  /* ---------- SERVICES with circuit spine ---------- */
+  .spine-row{
+    display:grid;
+    grid-template-columns: 28px 1fr;
+    gap:0 28px;
+  }
+  .spine{
+    position:relative;
+  }
+  .spine::before{
+    content:'';
+    position:absolute;
+    left:50%; top:6px; bottom:6px;
+    width:2px;
+    background:repeating-linear-gradient(to bottom, var(--line) 0 6px, transparent 6px 12px);
+    transform:translateX(-50%);
+  }
+  .service-item{
+    display:grid; grid-template-columns:28px 1fr; gap:0 28px;
+    margin-bottom:8px;
+  }
+  .node{
+    position:relative;
+    display:flex; align-items:flex-start; justify-content:center;
+    padding-top:30px;
+  }
+  .node span{
+    width:12px; height:12px; border-radius:50%;
+    background:var(--panel);
+    border:2px solid var(--teal);
+    position:relative; z-index:2;
+  }
+  .service-card{
+    background:var(--panel);
+    border:1px solid rgba(32,36,42,0.08);
+    border-radius:var(--radius);
+    padding:28px 30px;
+    margin-bottom:20px;
+    transition: border-color .2s, transform .2s;
+  }
+  .service-card:hover{border-color:var(--teal); transform:translateX(2px);}
+  .service-card .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--teal-deep);
+    background:var(--teal-pale);
+    padding:3px 10px;
+    border-radius:100px;
+    display:inline-block;
+    margin-bottom:12px;
+  }
+  .service-card h3{font-size:1.22rem; margin-bottom:8px;}
+  .service-card p{color:var(--ink-soft); font-size:0.97rem; max-width:56ch;}
+
+  /* ---------- PROCESS ---------- */
+  .process{
+    background:var(--ink);
+    border-radius:20px;
+    padding:64px 40px;
+    color:#F3F1EA;
+  }
+  .process .section-head h2, .process .section-head p{color:#F3F1EA;}
+  .process .section-head p{color:#B7BFC6;}
+  .process .eyebrow{color:var(--teal-light);}
+  .process .eyebrow::before{background:var(--teal-light); box-shadow:0 0 0 3px rgba(79,182,176,0.25);}
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    position:relative;
+  }
+  .steps::before{
+    content:'';
+    position:absolute; top:17px; left:6%; right:6%; height:2px;
+    background:repeating-linear-gradient(to right, rgba(79,182,176,0.4) 0 6px, transparent 6px 12px);
+  }
+  .step{position:relative; padding-right:20px;}
+  .step .num{
+    width:36px; height:36px; border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--teal-light);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:0.85rem;
+    color:var(--teal-light);
+    margin-bottom:18px;
+    position:relative; z-index:2;
+  }
+  .step h3{font-size:1.05rem; margin-bottom:8px; color:#fff;}
+  .step p{font-size:0.88rem; color:#AEB6BD;}
+
+  /* ---------- PRODUCT (TCG Eventos) & PRICING ---------- */
+  .product-panel{
+    background:var(--panel);
+    border:1px solid rgba(32,36,42,0.08);
+    border-radius:20px;
+    padding:52px;
+  }
+  .product-head{
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; margin-bottom:48px;
+  }
+  .product-panel h2{font-size:1.9rem; margin:14px 0 14px;}
+  .product-panel p.lead{color:var(--ink-soft); max-width:54ch;}
+  .feature-list{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:14px 24px;}
+  .feature-list li{
+    font-size:0.92rem; color:var(--ink);
+    display:flex; align-items:flex-start; gap:10px;
+  }
+  .feature-list li::before{
+    content:'✓'; color:var(--teal); font-weight:700; flex-shrink:0;
+  }
+
+  .pricing-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;
+    border-top:1px solid rgba(32,36,42,0.08); padding-top:40px;
+  }
+  .price-card{
+    background:var(--bg);
+    border:1px solid rgba(32,36,42,0.1);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative;
+  }
+  .price-card.featured{
+    background:var(--panel);
+    border:2px solid var(--teal);
+    box-shadow: 0 8px 24px rgba(19,120,128,0.08);
+  }
+  .price-card .badge{
+    position:absolute; top:-12px; right:20px;
+    background:var(--teal); color:#fff;
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+    font-weight:600; text-transform:uppercase; letter-spacing:0.08em;
+    padding:3px 10px; border-radius:100px;
+  }
+  .price-card .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    color:var(--teal-deep); text-transform:uppercase; letter-spacing:0.1em;
+  }
+  .price-card .price-big{
+    font-family:'Space Grotesk', sans-serif; font-weight:700;
+    font-size:2.2rem; color:var(--ink); margin:8px 0 2px;
+    display:flex; align-items:baseline; gap:6px;
+  }
+  .price-card .price-big .old{
+    font-size:1.2rem; text-decoration:line-through; color:var(--ink-soft); font-weight:500;
+  }
+  .price-card .price-big .sub{
+    font-size:0.88rem; font-weight:400; color:var(--ink-soft);
+  }
+  .price-card .price-note{font-size:0.85rem; color:var(--ink-soft); margin-bottom:20px; min-height:40px;}
+  .price-card .card-features{
+    list-style:none; margin-bottom:24px; font-size:0.86rem; color:var(--ink-soft);
+    display:flex; flex-direction:column; gap:8px; border-top:1px dashed rgba(32,36,42,0.12); padding-top:16px;
+  }
+  .price-card .card-features li::before{content:'• '; color:var(--teal); font-weight:bold;}
+  .price-card .btn{width:100%;}
+
+  /* ---------- WHY ---------- */
+  .why-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  .why-card{padding:6px 0;}
+  .why-card .n{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--teal);
+    font-size:0.8rem;
+    margin-bottom:10px;
+  }
+  .why-card h3{font-size:1.1rem; margin-bottom:8px;}
+  .why-card p{color:var(--ink-soft); font-size:0.95rem;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-panel{
+    background:var(--panel);
+    border:1px solid rgba(32,36,42,0.08);
+    border-radius:20px;
+    padding:56px;
+    display:grid; grid-template-columns:1fr 1fr; gap:52px;
+  }
+  .contact-panel h2{font-size:1.9rem; margin-bottom:14px;}
+  .contact-panel .lead{color:var(--ink-soft); margin-bottom:26px; max-width:40ch;}
+  .contact-list{list-style:none; display:flex; flex-direction:column; gap:14px;}
+  .contact-list li{
+    font-family:'IBM Plex Mono', monospace; font-size:0.9rem;
+    display:flex; align-items:center; gap:10px; color:var(--ink-soft);
+  }
+  .contact-list li::before{
+    content:''; width:6px; height:6px; border-radius:50%; background:var(--teal);
+  }
+  form{display:flex; flex-direction:column; gap:14px;}
+  label{font-size:0.82rem; font-weight:600; color:var(--ink); margin-bottom:2px; display:block;}
+  input, textarea{
+    width:100%;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.95rem;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid rgba(32,36,42,0.16);
+    background:#FBFAF7;
+    color:var(--ink);
+  }
+  textarea{resize:vertical; min-height:88px;}
+  form .btn.solid{align-self:flex-start; margin-top:6px; border:none; cursor:pointer;}
+
+  footer{padding:40px 0 56px; border-top:1px solid rgba(32,36,42,0.08); margin-top:40px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  footer .brand{font-size:0.95rem;}
+  footer p{color:var(--ink-soft); font-size:0.82rem; font-family:'IBM Plex Mono', monospace;}
+
+  @media (max-width: 880px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{max-width:280px; margin:0 auto;}
+    .steps{grid-template-columns:1fr; gap:32px;}
+    .steps::before{display:none;}
+    .why-grid{grid-template-columns:1fr; gap:32px;}
+    .contact-panel{grid-template-columns:1fr; padding:36px 26px;}
+    .product-panel{padding:36px 26px;}
+    .product-head{grid-template-columns:1fr; gap:24px;}
+    .pricing-grid{grid-template-columns:1fr; gap:24px;}
+    .feature-list{grid-template-columns:1fr;}
+    nav .links{display:none;}
+    .process{padding:48px 24px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot-i"></span>AIT Solutions</div>
+    <div class="links">
+      <a href="#producto">TCG Eventos</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#por-que">Por qué AIT</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="#contacto" class="btn solid">Hablemos</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Desarrollo de software a medida</div>
+      <h1>Software a medida para tu negocio — <em>hecho por quien también lo usa</em></h1>
+      <p class="lead">En AIT Solutions diseñamos y construimos aplicaciones, CRMs y herramientas de gestión a medida. Nuestro primer producto propio, TCG Eventos, ya gestiona ventas en tiempo real en ferias reales — así trabajamos con nuestros clientes.</p>
+      <div class="hero-ctas">
+        <a href="#producto" class="btn solid">Ver TCG Eventos</a>
+        <a href="#contacto" class="btn">Solicitar software a medida</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 300 300">
+        <circle cx="150" cy="150" r="118" fill="none" stroke="#DCEEEC" stroke-width="2"/>
+        <path d="M150 32 L150 90 Q150 110 170 110 L215 110 Q235 110 235 130 L235 175"
+              fill="none" stroke="#137880" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="150" cy="32" r="6" fill="#137880"/>
+        <circle cx="215" cy="110" r="5" fill="#4FB6B0"/>
+        <circle cx="235" cy="175" r="6" fill="#0E5B62"/>
+        <path d="M150 268 L150 210 Q150 190 130 190 L90 190 Q70 190 70 170 L70 140"
+              fill="none" stroke="#137880" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+        <circle cx="150" cy="268" r="6" fill="#137880" opacity="0.55"/>
+        <circle cx="90" cy="190" r="5" fill="#4FB6B0" opacity="0.55"/>
+        <circle cx="70" cy="140" r="6" fill="#0E5B62" opacity="0.55"/>
+        <text x="150" y="162" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="54" fill="#20242A">a</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap">
+    <div><b>Tiempo real</b> ventas y stock sin recargar</div>
+    <div><b>PWA</b> instalable en móvil y escritorio</div>
+    <div><b>Multi-empresa</b> cada cliente aislado y controlado</div>
+    <div><b>Soporte directo</b> hablas con quien lo construye</div>
+  </div>
+</div>
+
+<section id="producto">
+  <div class="wrap">
+    <div class="product-panel">
+      <div class="product-head">
+        <div>
+          <div class="eyebrow">Producto propio</div>
+          <h2>TCG Eventos</h2>
+          <p class="lead">Gestión de ventas y compras para ferias de cartas coleccionables (Pokémon, Magic, Lorcana...). Los trabajadores registran cada movimiento desde su móvil con un PIN propio, y tú lo ves todo en el mismo instante, sin llamadas ni WhatsApps para saber cómo va la caja.</p>
+        </div>
+        <div>
+          <ul class="feature-list">
+            <li>Ventas y compras en tiempo real</li>
+            <li>Cuentas de trabajador con PIN, sin cuentas complejas</li>
+            <li>Catálogo con precios fijos y productos en colaboración</li>
+            <li>Cierre de caja por día y ranking de productos</li>
+            <li>Exportación a CSV para tus cuentas</li>
+            <li>Instalable como app en móvil y escritorio (PWA)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SECCIÓN DE PRECIOS Y TARIFAS -->
+      <div class="pricing-grid">
+        <!-- Tarjeta 1: Evento Suelto -->
+        <div class="price-card">
+          <div>
+            <span class="tag">Evento Suelto</span>
+            <div class="price-big">
+              35€ <span class="sub">/ evento</span>
+            </div>
+            <div class="price-note">
+              <strong>Oferta bienvenida:</strong> 17,50€ en tu primer evento (50% DTO).
+            </div>
+            <ul class="card-features">
+              <li>1 evento completo (sin límite de días)</li>
+              <li>Trabajadores sin límite, sin coste extra</li>
+              <li>Gestión de Depósito / COLAB</li>
+              <li>Exportación a CSV al terminar</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="btn">Probar primer evento al 50%</a>
+        </div>
+
+        <!-- Tarjeta 2: Bonos de Eventos (Destacado) -->
+        <div class="price-card featured">
+          <span class="badge">Ahorro para temporada</span>
+          <div>
+            <span class="tag">Bonos Feriales</span>
+            <div class="price-big">
+              89€ <span class="sub">/ 3 eventos</span>
+            </div>
+            <div class="price-note">
+              O elige el <strong>Bono 6 Eventos por 159€</strong> (sale a 26,50€/evento).
+            </div>
+            <ul class="card-features">
+              <li>Sin caducidad mensual: úsalos cuando viajes</li>
+              <li>Trabajadores sin límite en cada evento</li>
+              <li>Cierre de caja diario incluido</li>
+              <li>Soporte técnico directo</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="btn solid">Comprar Bono de Eventos</a>
+        </div>
+
+        <!-- Tarjeta 3: Plan Anual Pro -->
+        <div class="price-card">
+          <div>
+            <span class="tag">Plan Anual Pro</span>
+            <div class="price-big">
+              399€ <span class="sub">/ año</span>
+            </div>
+            <div class="price-note">
+              Para vendedores itinerantes que están en carretera todo el año.
+            </div>
+            <ul class="card-features">
+              <li><strong>Eventos ilimitados y simultáneos</strong> todo el año</li>
+              <li>Informe de evento con un clic, listo para imprimir</li>
+              <li>Modo offline: sigue vendiendo sin conexión</li>
+              <li>Soporte prioritario en directo</li>
+            </ul>
+          </div>
+          <a href="#contacto" class="btn">Contratar Plan Anual</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Servicios</div>
+      <h2>Software que se adapta a cómo trabajas, no al revés</h2>
+      <p>Cada proyecto parte de tu proceso real de ventas o atención al cliente. Construimos, integramos y mantenemos.</p>
+    </div>
+
+    <div class="spine-row">
+      <div class="spine"></div>
+      <div>
+        <div class="service-item">
+          <div class="node"><span></span></div>
+          <div class="service-card">
+            <span class="tag">Landing pages</span>
+            <h3>Página a medida para tu negocio o evento</h3>
+            <p>Diseño propio, sin plantillas genéricas: una landing rápida, clara y pensada para convertir, lista en días, no en semanas.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="node"><span></span></div>
+          <div class="service-card">
+            <span class="tag">CRM a medida</span>
+            <h3>Gestión comercial hecha para tu embudo</h3>
+            <p>Pipeline, seguimiento de leads y reporting adaptados a tu ciclo de venta real, sin pagar por funciones que no usarás nunca.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="node"><span></span></div>
+          <div class="service-card">
+            <span class="tag">CSM · Customer Success</span>
+            <h3>Gestión de clientes y postventa</h3>
+            <p>Seguimiento de cuentas, alertas de renovación e historial de interacciones centralizado para que ningún cliente se quede sin respuesta.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="node"><span></span></div>
+          <div class="service-card">
+            <span class="tag">Integraciones</span>
+            <h3>Conectado con lo que ya usas</h3>
+            <p>APIs, automatizaciones y sincronización con tus herramientas de email, facturación o soporte actuales.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="node"><span></span></div>
+          <div class="service-card">
+            <span class="tag">Infraestructura</span>
+            <h3>Despliegue y mantenimiento</h3>
+            <p>Alojamos y mantenemos tu aplicación con copias de seguridad, monitorización y soporte técnico continuo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="process">
+      <div class="section-head">
+        <div class="eyebrow">Cómo trabajamos</div>
+        <h2>De la primera reunión al software en producción</h2>
+        <p>Un proceso corto y transparente, con entregas visibles en cada etapa.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">01</div>
+          <h3>Análisis</h3>
+          <p>Mapeamos tu proceso actual y detectamos dónde el software te está frenando.</p>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <h3>Diseño</h3>
+          <p>Definimos flujo, datos e interfaz contigo antes de escribir una línea de código.</p>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <h3>Desarrollo</h3>
+          <p>Construimos en iteraciones cortas, con avances que puedes revisar cada semana.</p>
+        </div>
+        <div class="step">
+          <div class="num">04</div>
+          <h3>Despliegue</h3>
+          <p>Lanzamos, formamos a tu equipo y damos soporte continuo tras la entrega.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="por-que">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Por qué AIT</div>
+      <h2>Consultoría cercana, sin capas de más</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="n">01</div>
+        <h3>Trato directo</h3>
+        <p>Hablas con quien construye tu software, no con un gestor de cuentas intermediario.</p>
+      </div>
+      <div class="why-card">
+        <div class="n">02</div>
+        <h3>A tu medida</h3>
+        <p>Nada de plantillas genéricas: el sistema se diseña sobre tu proceso, no al contrario.</p>
+      </div>
+      <div class="why-card">
+        <div class="n">03</div>
+        <h3>Soporte real</h3>
+        <p>Seguimos disponibles después del lanzamiento, con mantenimiento y mejoras continuas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap">
+    <div class="contact-panel">
+      <div>
+        <div class="eyebrow">Contacto</div>
+        <h2>Cuéntanos qué necesita tu equipo</h2>
+        <p class="lead">Respondemos en menos de 24h laborables con los siguientes pasos.</p>
+        <ul class="contact-list">
+          <li>hola@aitsolutions.es</li>
+          <li>+34 600 000 000</li>
+          <li>Alicante, España · remoto</li>
+        </ul>
+      </div>
+      <form onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Enviado ✓';">
+        <div>
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" required>
+        </div>
+        <div>
+          <label for="mensaje">¿Qué necesitas?</label>
+          <textarea id="mensaje" required></textarea>
+        </div>
+        <button class="btn solid" type="submit">Enviar mensaje</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="dot-i" style="color:var(--teal)"></span>AIT Solutions</div>
+    <p>© 2026 AIT Solutions — Consultoría IT & Software a medida</p>
+  </div>
+</footer>
+
+</body>
+</html>
