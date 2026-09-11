@@ -77,6 +77,7 @@
     height:64px;
   }
   .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:1.05rem;}
+  a.brand{text-decoration:none;}
   nav .links{display:flex; gap:28px; font-size:0.92rem; color:var(--ink-soft);}
   nav .links a{transition:color .15s;}
   nav .links a:hover{color:var(--teal-deep);}
@@ -384,7 +385,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand">
+    <a class="brand" href="#">
       <svg class="logo-mark" viewBox="0 0 95 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <g transform="translate(10, 15)">
           <path d="M 10 90 L 45 15 L 62 15 L 40 90 Z" fill="#0055A5"/>
@@ -393,7 +394,7 @@
         </g>
       </svg>
       AIT Solutions
-    </div>
+    </a>
     <div class="links">
       <a href="#producto">TCG Eventos</a>
       <a href="como-funciona.html">Cómo funciona</a>
