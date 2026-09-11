@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo funciona TCG Eventos — AIT Solutions</title>
+<meta name="description" content="Recorrido paso a paso por TCG Eventos: cómo crear un evento, repartir el acceso a tus trabajadores, vender en tiempo real, hacer el arqueo de caja y cerrar con el informe listo.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cómo funciona TCG Eventos">
+<meta property="og:description" content="Guía visual paso a paso: crear el evento, vender, arqueo de caja y cierre con informe. Así es TCG Eventos por dentro.">
+<meta property="og:url" content="https://cristianvegara.github.io/ait-landing/como-funciona.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 95 115'%3E%3Cg transform='translate(10,15)'%3E%3Cpath d='M 10 90 L 45 15 L 62 15 L 40 90 Z' fill='%230055A5'/%3E%3Cpath d='M 42 45 L 75 90 H 58 L 37 62 Z' fill='%2300A3E0'/%3E%3Ccircle cx='58' cy='90' r='6' fill='%230055A5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F1EA;
+    --panel:#FFFFFF;
+    --ink:#20242A;
+    --ink-soft:#565D66;
+    --teal:#0055A5;
+    --teal-deep:#003E7A;
+    --teal-light:#00A3E0;
+    --teal-pale:#DCEEFA;
+    --line: rgba(0,85,165,0.35);
+    --radius: 14px;
+    --maxw: 1120px;
+
+    /* Paleta real de la app (tema "Ticket") — para los mockups de pantalla */
+    --app-bg:#15120f;
+    --app-surface:#1f1b17;
+    --app-surface-2:#2a2420;
+    --app-line:#3a322b;
+    --app-text:#f2ece1;
+    --app-muted:#9c9184;
+    --app-compra:#d9a234;
+    --app-compra-dim:#4e4020;
+    --app-venta:#4fa98a;
+    --app-venta-dim:#2e4b41;
+    --app-accent:#7a8fd9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal-deep);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px;height:7px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 3px var(--teal-pale);
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  .logo-mark{height:34px; width:auto; display:block; flex-shrink:0;}
+  footer .logo-mark{height:22px;}
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,241,234,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid rgba(32,36,42,0.08);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:1.05rem;}
+  nav .links{display:flex; gap:28px; font-size:0.92rem; color:var(--ink-soft);}
+  nav .links a{transition:color .15s;}
+  nav .links a:hover{color:var(--teal-deep);}
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:600;
+    font-size:0.88rem;
+    padding:10px 20px;
+    border-radius:100px;
+    border:1px solid var(--teal);
+    color:var(--teal-deep);
+    background:transparent;
+    cursor:pointer;
+    transition:all .18s ease;
+    display:inline-block;
+    text-align:center;
+  }
+  .btn.solid{background:var(--teal); color:#fff; border-color:var(--teal);}
+  .btn.solid:hover{background:var(--teal-deep); border-color:var(--teal-deep);}
+  .btn:hover{background:var(--teal-pale);}
+  .btn:focus-visible, a:focus-visible{outline:2px solid var(--teal-deep); outline-offset:3px;}
+
+  header.hero{padding:72px 0 56px;}
+  .hero h1{
+    font-size:clamp(2rem, 4vw, 3rem);
+    line-height:1.1;
+    margin:18px 0 18px;
+    max-width:20ch;
+  }
+  .hero p.lead{
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin-bottom:28px;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+
+  section{padding:64px 0;}
+  .section-head{max-width:640px; margin-bottom:48px;}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.1rem); margin-top:14px;}
+  .section-head p{color:var(--ink-soft); margin-top:14px; font-size:1.02rem;}
+
+  /* ---------- PASOS ---------- */
+  .step-row{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:56px;
+    align-items:center;
+    padding:56px 0;
+    border-top:1px solid rgba(32,36,42,0.08);
+  }
+  .step-row:first-of-type{border-top:none;}
+  .step-row.reverse .step-copy{order:2;}
+  .step-row.reverse .step-shot{order:1;}
+  .step-num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--teal);
+    font-size:0.85rem;
+    margin-bottom:10px;
+  }
+  .step-copy h3{font-size:1.4rem; margin-bottom:12px;}
+  .step-copy p{color:var(--ink-soft); font-size:0.98rem; max-width:46ch;}
+  .step-copy ul{margin-top:14px; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .step-copy li{font-size:0.9rem; color:var(--ink-soft); display:flex; gap:8px;}
+  .step-copy li::before{content:'→'; color:var(--teal); flex-shrink:0;}
+  .step-shot{display:flex; justify-content:center;}
+
+  /* ---------- MOCKUPS DE PANTALLA (colores reales de la app) ---------- */
+  .frame-browser{
+    width:100%; max-width:460px;
+    background:var(--app-bg);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 24px 48px rgba(20,18,14,0.28);
+    border:1px solid rgba(0,0,0,0.2);
+  }
+  .frame-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:10px 14px;
+    background:#0f0d0b;
+  }
+  .frame-bar span{width:9px; height:9px; border-radius:50%; background:#3a322b;}
+  .frame-body{padding:22px 20px; font-family:'IBM Plex Sans', sans-serif;}
+  .frame-body.light{background:#fff; color:#20242A;}
+
+  .frame-phone{
+    width:280px;
+    background:var(--app-bg);
+    border-radius:32px;
+    padding:14px;
+    box-shadow:0 24px 48px rgba(20,18,14,0.28);
+    border:6px solid #0f0d0b;
+  }
+  .frame-phone .frame-body{padding:10px 6px 18px; border-radius:20px;}
+  .frame-notch{width:70px; height:5px; border-radius:4px; background:#0f0d0b; margin:0 auto 12px;}
+
+  .app-h1{font-family:'Space Grotesk',sans-serif; color:var(--app-text); font-weight:700; font-size:1.15rem; margin-bottom:4px;}
+  .app-sub{color:var(--app-muted); font-size:0.72rem; margin-bottom:14px;}
+  .app-field{
+    background:var(--app-surface-2); border:1px solid var(--app-line); border-radius:10px;
+    padding:10px 12px; font-size:0.78rem; color:var(--app-text); margin-bottom:9px;
+  }
+  .app-field.ghost{color:var(--app-muted);}
+  .app-row{display:flex; gap:8px;}
+  .app-row .app-field{flex:1;}
+  .app-btn{
+    display:inline-block; background:var(--app-accent); color:#15161a;
+    font-weight:600; font-size:0.78rem; padding:9px 14px; border-radius:9px; text-align:center;
+  }
+  .app-btn.ghost{background:var(--app-surface-2); color:var(--app-text); border:1px solid var(--app-line);}
+  .app-btn.green{background:var(--app-venta); color:#0f2a20;}
+  .app-pill{
+    display:inline-block; font-size:0.62rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;
+    padding:3px 9px; border-radius:20px; background:var(--app-venta-dim); color:var(--app-venta);
+  }
+  .app-card{background:var(--app-surface); border:1px solid var(--app-line); border-radius:10px; padding:12px; margin-bottom:8px;}
+  .app-card .label{font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--app-muted); margin-bottom:4px;}
+  .app-card .val{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; color:var(--app-text);}
+  .app-card .val.green{color:var(--app-venta);}
+  .app-card .val.amber{color:var(--app-compra);}
+  .app-grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px;}
+  .app-worker-row{display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px dashed var(--app-line); font-size:0.8rem;}
+  .app-worker-row:last-child{border-bottom:none;}
+  .app-worker-row .name{color:var(--app-text); font-weight:600;}
+  .app-worker-row .pin{font-family:'IBM Plex Mono',monospace; color:var(--app-accent); letter-spacing:0.1em;}
+  .app-move{display:flex; justify-content:space-between; font-size:0.78rem; padding:8px 0; border-bottom:1px solid var(--app-line);}
+  .app-move .who{color:var(--app-muted); font-size:0.68rem;}
+  .app-move .amt{color:var(--app-venta); font-weight:600;}
+  .app-keypad{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:10px 0;}
+  .app-key{background:var(--app-surface-2); border:1px solid var(--app-line); border-radius:8px; text-align:center; padding:8px 0; font-size:0.8rem; color:var(--app-text);}
+  .app-total{display:flex; justify-content:space-between; align-items:baseline; background:var(--app-surface-2); border-radius:8px; padding:10px 12px; margin:8px 0;}
+  .app-total .n{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.3rem; color:var(--app-text);}
+  .app-pay{display:flex; gap:6px; margin:10px 0;}
+  .app-pay span{flex:1; text-align:center; font-size:0.7rem; padding:8px 0; border-radius:8px; border:1px solid var(--app-line); color:var(--app-muted);}
+  .app-pay span.sel{background:var(--app-venta-dim); border-color:var(--app-venta); color:var(--app-venta); font-weight:600;}
+  .app-report{background:#fff; border-radius:8px; padding:16px; color:#20242A; font-family:'IBM Plex Sans',sans-serif;}
+  .app-report h4{font-family:'Space Grotesk',sans-serif; font-size:0.95rem; margin-bottom:10px;}
+  .app-report table{width:100%; border-collapse:collapse; font-size:0.72rem;}
+  .app-report td, .app-report th{padding:6px 4px; text-align:left; border-bottom:1px solid #eee;}
+  .app-report th{color:#8a8f96; font-weight:500; font-size:0.62rem; text-transform:uppercase;}
+  .app-report .pos{color:#2f8f6b; font-weight:600;}
+  .app-toast{
+    margin-top:10px; text-align:center; background:#e9e4d8; color:#20242A; font-size:0.72rem;
+    padding:8px; border-radius:8px; font-weight:600;
+  }
+
+  /* ---------- MANUAL RÁPIDO ---------- */
+  .faq{border-top:1px solid rgba(32,36,42,0.08);}
+  .faq-item{border-bottom:1px solid rgba(32,36,42,0.08); padding:22px 0;}
+  .faq-item summary{
+    cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.02rem;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+'; color:var(--teal); font-size:1.3rem; font-weight:400; flex-shrink:0; margin-left:16px;}
+  .faq-item[open] summary::after{content:'–';}
+  .faq-item p, .faq-item ol, .faq-item ul{color:var(--ink-soft); font-size:0.95rem; margin-top:12px; max-width:64ch;}
+  .faq-item ol, .faq-item ul{padding-left:20px;}
+  .faq-item li{margin-bottom:6px;}
+
+  .cta-panel{
+    background:var(--ink); border-radius:20px; padding:56px 48px; text-align:center; color:#fff;
+  }
+  .cta-panel h2{color:#fff; font-size:1.7rem; margin-bottom:14px;}
+  .cta-panel p{color:#B7BFC6; max-width:52ch; margin:0 auto 26px;}
+  .cta-panel .hero-ctas{justify-content:center;}
+
+  footer{padding:40px 0 56px; border-top:1px solid rgba(32,36,42,0.08); margin-top:20px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  footer .brand{font-size:0.95rem;}
+  footer p{color:var(--ink-soft); font-size:0.82rem; font-family:'IBM Plex Mono', monospace;}
+
+  @media (max-width: 880px){
+    nav .links{display:none;}
+    .step-row{grid-template-columns:1fr; gap:28px; padding:40px 0;}
+    .step-row.reverse .step-copy{order:1;}
+    .step-row.reverse .step-shot{order:2;}
+    .cta-panel{padding:40px 24px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 95 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g transform="translate(10, 15)">
+          <path d="M 10 90 L 45 15 L 62 15 L 40 90 Z" fill="#0055A5"/>
+          <path d="M 42 45 L 75 90 H 58 L 37 62 Z" fill="#00A3E0"/>
+          <circle cx="58" cy="90" r="6" fill="#0055A5"/>
+        </g>
+      </svg>
+      AIT Solutions
+    </div>
+    <div class="links">
+      <a href="index.html#producto">TCG Eventos</a>
+      <a href="como-funciona.html">Cómo funciona</a>
+      <a href="index.html#servicios">Servicios</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+    <a href="index.html#contacto" class="btn solid">Hablemos</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Guía de uso — TCG Eventos</div>
+    <h1>Así se usa TCG Eventos, paso a paso</h1>
+    <p class="lead">Desde que creas el evento hasta que cierras la caja con el informe listo para imprimir.</p>
+    <div class="hero-ctas">
+      <a href="#paso-1" class="btn solid">Empezar el recorrido</a>
+      <a href="#manual" class="btn">Ir al manual rápido</a>
+    </div>
+  </div>
+</header>
+
+<section id="paso-1">
+  <div class="wrap">
+
+    <div class="step-row" id="paso-1">
+      <div class="step-copy">
+        <div class="step-num">Paso 1 / 7</div>
+        <h3>Creas el evento en dos minutos</h3>
+        <p>Nombre, fechas (hasta 7 días), y eliges si cada trabajador lleva su propia caja o una compartida. Añades el catálogo de productos con su precio — o dejas que se registren importes libres — y das de alta a los trabajadores.</p>
+        <ul>
+          <li>Sin límite de trabajadores en ningún plan</li>
+          <li>Marca los productos en depósito/colaboración aparte</li>
+        </ul>
+      </div>
+      <div class="step-shot">
+        <div class="frame-browser">
+          <div class="frame-bar"><span></span><span></span><span></span></div>
+          <div class="frame-body">
+            <div class="app-h1">Nuevo evento</div>
+            <div class="app-sub">Un evento dura como máximo 7 días</div>
+            <div class="app-field">Alicante TCG Fest — Otoño 2026</div>
+            <div class="app-row">
+              <div class="app-field">17/10/2026</div>
+              <div class="app-field">18/10/2026</div>
+            </div>
+            <div class="app-sub" style="margin:14px 0 8px;">Productos</div>
+            <div class="app-row">
+              <div class="app-field">Sobre Escarlata y Púrpura</div>
+              <div class="app-field" style="max-width:70px;">5,50€</div>
+            </div>
+            <div class="app-sub" style="margin:14px 0 8px;">Trabajadores del evento</div>
+            <div class="app-field ghost">Nombre del trabajador</div>
+            <div style="margin-top:14px;"><span class="app-btn">Crear evento</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-copy">
+        <div class="step-num">Paso 2 / 7</div>
+        <h3>Reparte el acceso a cada trabajador</h3>
+        <p>Cada trabajador recibe un PIN de 4 dígitos propio, ligado solo a ese evento. Se lo mandas por WhatsApp con el botón "Compartir" — no hace falta que se registren ni instalen nada de antemano.</p>
+        <ul>
+          <li>Puedes regenerar o desactivar un PIN en cualquier momento</li>
+          <li>Si alguien pierde el móvil, revocas su acceso al momento</li>
+        </ul>
+      </div>
+      <div class="step-shot">
+        <div class="frame-browser">
+          <div class="frame-bar"><span></span><span></span><span></span></div>
+          <div class="frame-body">
+            <div class="app-h1">Evento creado</div>
+            <div class="app-sub">Reparte estos PINs a cada trabajador — no se volverán a mostrar aquí.</div>
+            <div class="app-card">
+              <div class="app-worker-row"><span class="name">Laura</span><span class="pin">4 7 2 8</span><span class="app-btn ghost">Compartir</span></div>
+              <div class="app-worker-row"><span class="name">Marc</span><span class="pin">4 9 9 1</span><span class="app-btn ghost">Compartir</span></div>
+            </div>
+            <div style="margin-top:10px;"><span class="app-btn">Ir al panel</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-copy">
+        <div class="step-num">Paso 3 / 7</div>
+        <h3>El trabajador entra con el código del evento y su PIN</h3>
+        <p>Sin contraseñas ni cuentas que gestionar: código del evento + nombre + PIN de 4 dígitos, y ya está dentro. Funciona igual en el móvil que en una tablet, instalado como app o desde el navegador.</p>
+      </div>
+      <div class="step-shot">
+        <div class="frame-phone">
+          <div class="frame-notch"></div>
+          <div class="frame-body">
+            <div class="app-h1" style="text-align:center;">Acceso trabajador</div>
+            <div class="app-sub" style="text-align:center;">Alicante TCG Fest — Otoño 2026</div>
+            <div class="app-sub">Tu nombre</div>
+            <div class="app-field">Laura ▾</div>
+            <div class="app-sub">PIN</div>
+            <div class="app-field" style="text-align:center; letter-spacing:10px; font-family:'IBM Plex Mono',monospace;">● ● ● ●</div>
+            <div style="margin-top:10px;"><span class="app-btn" style="display:block;">Entrar</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-copy">
+        <div class="step-num">Paso 4 / 7</div>
+        <h3>Registrar una venta: tres toques</h3>
+        <p>Categoría → producto → método de pago. Los precios de catálogo salen solos; para lo que no está en catálogo, importe libre. Cada movimiento queda guardado al instante — no se puede editar ni borrar por error, así la caja nunca se descuadra por un despiste.</p>
+      </div>
+      <div class="step-shot">
+        <div class="frame-phone">
+          <div class="frame-notch"></div>
+          <div class="frame-body">
+            <span class="app-pill">Venta</span>
+            <div class="app-h1" style="margin-top:10px;">Sobre Escarlata y Púrpura</div>
+            <div class="app-sub">1 × 5,50€</div>
+            <div class="app-total"><span class="app-sub" style="margin:0;">Total</span><span class="n">5,50€</span></div>
+            <div class="app-keypad">
+              <div class="app-key">1</div><div class="app-key">2</div><div class="app-key">3</div>
+              <div class="app-key">4</div><div class="app-key">5</div><div class="app-key">6</div>
+            </div>
+            <div class="app-pay">
+              <span class="sel">efectivo</span><span>tarjeta</span><span>bizum</span>
+            </div>
+            <div class="app-btn green" style="display:block; text-align:center;">Finalizar venta</div>
+            <div class="app-toast">Guardado: €5,50</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-copy">
+        <div class="step-num">Paso 5 / 7</div>
+        <h3>Tú lo ves en el mismo instante</h3>
+        <p>Sin llamar ni preguntar por WhatsApp cómo va la caja: entras al panel y ves las ventas, compras y beneficio actualizados en tiempo real, desglosados por trabajador y con el último movimiento registrado.</p>
+      </div>
+      <div class="step-shot">
+        <div class="frame-browser">
+          <div class="frame-bar"><span></span><span></span><span></span></div>
+          <div class="frame-body">
+            <div class="app-h1">Alicante TCG Fest — Otoño 2026</div>
+            <div class="app-grid3">
+              <div class="app-card"><div class="label">Ventas</div><div class="val green">€5,50</div></div>
+              <div class="app-card"><div class="label">Compras</div><div class="val amber">€0,00</div></div>
+              <div class="app-card"><div class="label">Beneficio</div><div class="val green">€5,50</div></div>
+            </div>
+            <div class="app-sub">Por trabajador</div>
+            <div class="app-card" style="margin-top:6px;">
+              <div class="app-worker-row"><span class="name">Laura</span><span class="pin">€5,50</span></div>
+              <div class="app-worker-row"><span class="name">Marc</span><span class="pin">€0,00</span></div>
+            </div>
+            <div class="app-sub">Últimos movimientos</div>
+            <div class="app-move"><span>Sobre Escarlata y Púrpura <span class="who">Laura · efectivo</span></span><span class="amt">+€5,50</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row reverse">
+      <div class="step-copy">
+        <div class="step-num">Paso 6 / 7</div>
+        <h3>Arqueo de caja, sin calculadora</h3>
+        <p>Al terminar el turno, cada trabajador cuenta el efectivo físico y la app le dice cuánto debería haber (fondo inicial + ventas en efectivo − compras en efectivo). Tarjeta y Bizum no hace falta contarlos: se verifican solos.</p>
+      </div>
+      <div class="step-shot">
+        <div class="frame-phone">
+          <div class="frame-notch"></div>
+          <div class="frame-body">
+            <div class="app-h1">Arqueo de caja</div>
+            <div class="app-sub">Solo cuenta el efectivo — tarjeta y bizum ya se verifican solos.</div>
+            <div class="app-card">
+              <div class="app-worker-row"><span class="name">Fondo de caja</span><span class="pin">€0,00</span></div>
+              <div class="app-worker-row"><span class="name">Ventas en efectivo</span><span class="pin" style="color:var(--app-venta);">€5,50</span></div>
+              <div class="app-worker-row"><span class="name">Efectivo esperado</span><span class="pin">€5,50</span></div>
+            </div>
+            <div class="app-sub">Efectivo contado</div>
+            <div class="app-total"><span class="n">5,50€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-copy">
+        <div class="step-num">Paso 7 / 7</div>
+        <h3>Cierras el evento y te llevas el informe</h3>
+        <p>Un botón: "Cerrar evento". Se genera un informe con el desglose por trabajador y los totales, listo para imprimir o guardar en PDF — y si prefieres tus propios números en una hoja de cálculo, exportas todo a CSV.</p>
+      </div>
+      <div class="step-shot">
+        <div class="frame-browser">
+          <div class="frame-bar"><span></span><span></span><span></span></div>
+          <div class="frame-body light" style="background:#fff;">
+            <div class="app-report">
+              <h4>Informe de evento — Alicante TCG Fest</h4>
+              <table>
+                <tr><th>Trabajador</th><th>Ventas</th><th>Compras</th><th>Balance</th></tr>
+                <tr><td>Laura</td><td class="pos">+€5,50</td><td>€0,00</td><td class="pos">+€5,50</td></tr>
+                <tr><td>Marc</td><td>€0,00</td><td>€0,00</td><td>€0,00</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="manual">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Manual rápido</div>
+      <h2>Las preguntas que suelen surgir el primer día</h2>
+      <p>Lo esencial en un vistazo. Para cualquier otra duda, escríbenos desde el formulario de contacto — respondemos en menos de 24h.</p>
+    </div>
+
+    <div class="faq">
+      <details class="faq-item" open>
+        <summary>¿Cómo instalo la app en el móvil?</summary>
+        <p>TCG Eventos es una PWA: no hace falta pasar por ninguna tienda de aplicaciones.</p>
+        <ul>
+          <li><strong>Android (Chrome):</strong> abre el enlace del evento, toca el menú (⋮) y elige "Instalar app" o "Añadir a pantalla de inicio".</li>
+          <li><strong>iPhone/iPad (Safari):</strong> toca el icono de compartir (□↑) y elige "Añadir a pantalla de inicio".</li>
+        </ul>
+      </details>
+      <details class="faq-item">
+        <summary>Un trabajador se ha quedado sin cobertura a mitad de feria, ¿se pierde la venta?</summary>
+        <p>En los planes Pro y Anual, no: la app sigue funcionando exactamente igual sin conexión, guarda las ventas en el propio móvil y las sincroniza sola en cuanto vuelve la cobertura. El trabajador ve un aviso de "pendiente de sincronizar" mientras tanto, nunca un error ni una venta perdida.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo cambiar un PIN si un trabajador lo ha olvidado o ha cambiado de móvil?</summary>
+        <p>Sí, desde el panel del evento → pestaña "Trabajadores" → "Regenerar PIN". El PIN anterior deja de funcionar al instante.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué pasa si un trabajador se equivoca al registrar un importe?</summary>
+        <p>Por seguridad, ningún movimiento se puede editar ni borrar una vez guardado — así la caja nunca cuadra "a mano". Si te equivocas, se anula registrando el movimiento contrario (p. ej. si vendiste a 6€ algo que era a 7€, registras una compra de 6€ para anularlo y luego la venta de 7€ correcta).</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cuánto cuesta y qué incluye cada plan?</summary>
+        <p>Tienes el detalle completo, con precios, en la sección de <a href="index.html#producto" style="color:var(--teal-deep); text-decoration:underline;">TCG Eventos</a> de la web. En resumen: <strong>Evento Suelto</strong> para una feria puntual, <strong>Bonos de Eventos</strong> si vas a varias ferias al año, y <strong>Plan Anual Pro</strong> con eventos ilimitados, modo sin conexión e informe con un clic.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-panel">
+      <h2>¿Lo ves en tu próxima feria?</h2>
+      <p>Prueba tu primer evento con el 50% de descuento y te acompañamos el día del montaje si lo necesitas.</p>
+      <div class="hero-ctas">
+        <a href="index.html#contacto" class="btn solid">Hablar con AIT Solutions</a>
+        <a href="index.html#producto" class="btn" style="border-color:#fff; color:#fff;">Ver precios</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 95 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g transform="translate(10, 15)">
+          <path d="M 10 90 L 45 15 L 62 15 L 40 90 Z" fill="#0055A5"/>
+          <path d="M 42 45 L 75 90 H 58 L 37 62 Z" fill="#00A3E0"/>
+          <circle cx="58" cy="90" r="6" fill="#0055A5"/>
+        </g>
+      </svg>
+      AIT Solutions
+    </div>
+    <p>© 2026 AIT Solutions — Consultoría IT & Software a medida</p>
+  </div>
+</footer>
+
+<script data-goatcounter="https://netwock.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
