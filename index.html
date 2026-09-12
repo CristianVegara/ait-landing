@@ -102,6 +102,40 @@
     outline:2px solid var(--teal-deep); outline-offset:3px;
   }
 
+  /* ---------- NAV MÓVIL (menú desplegable) ---------- */
+  .menu-toggle{
+    display:none;
+    align-items:center; justify-content:center;
+    width:38px; height:38px;
+    border-radius:10px;
+    border:1px solid rgba(32,36,42,0.16);
+    background:transparent;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+  }
+  .menu-toggle:hover{background:var(--teal-pale);}
+  .menu-toggle svg{width:18px; height:18px; display:block;}
+  .menu-toggle .icon-close{display:none;}
+  .menu-toggle[aria-expanded="true"] .icon-open{display:none;}
+  .menu-toggle[aria-expanded="true"] .icon-close{display:block;}
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    padding:6px 28px 18px;
+    border-top:1px solid rgba(32,36,42,0.08);
+  }
+  .mobile-menu a{
+    padding:12px 0;
+    font-size:0.95rem;
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-bottom:1px solid rgba(32,36,42,0.06);
+  }
+  .mobile-menu a:last-child{border-bottom:none;}
+  .mobile-menu a:hover{color:var(--teal-deep);}
+  nav.menu-open .mobile-menu{display:flex;}
+
   /* ---------- HERO ---------- */
   header.hero{padding:96px 0 80px;}
   .hero-grid{
@@ -325,7 +359,7 @@
     border:1px solid rgba(32,36,42,0.08);
     border-radius:20px;
     padding:56px;
-    display:grid; grid-template-columns:1fr 1fr; gap:52px;
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:52px;
   }
   .contact-panel h2{font-size:1.9rem; margin-bottom:14px;}
   .contact-panel .lead{color:var(--ink-soft); margin-bottom:26px; max-width:40ch;}
@@ -333,7 +367,9 @@
   .contact-list li{
     font-family:'IBM Plex Mono', monospace; font-size:0.9rem;
     display:flex; align-items:center; gap:10px; color:var(--ink-soft);
+    min-width:0;
   }
+  .contact-list li a{overflow-wrap:break-word; word-break:break-word; min-width:0;}
   .contact-list li::before{
     content:''; width:6px; height:6px; border-radius:50%; background:var(--teal);
   }
@@ -367,12 +403,13 @@
     .steps{grid-template-columns:1fr; gap:32px;}
     .steps::before{display:none;}
     .why-grid{grid-template-columns:1fr; gap:32px;}
-    .contact-panel{grid-template-columns:1fr; padding:36px 26px;}
+    .contact-panel{grid-template-columns:minmax(0,1fr); padding:36px 26px;}
     .product-panel{padding:36px 26px;}
     .product-head{grid-template-columns:1fr; gap:24px;}
     .pricing-grid{grid-template-columns:1fr; gap:24px;}
     .feature-list{grid-template-columns:1fr;}
     nav .links{display:none;}
+    .menu-toggle{display:flex;}
     .process{padding:48px 24px;}
   }
   @media (prefers-reduced-motion: reduce){
@@ -383,7 +420,7 @@
 </head>
 <body>
 
-<nav>
+<nav id="site-nav">
   <div class="wrap">
     <a class="brand" href="#">
       <svg class="logo-mark" viewBox="0 0 95 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -403,7 +440,23 @@
       <a href="#por-que">Por qué AIT</a>
       <a href="#contacto">Contacto</a>
     </div>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
     <a href="#contacto" class="btn solid">Hablemos</a>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#producto">TCG Eventos</a>
+    <a href="como-funciona.html">Cómo funciona</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#por-que">Por qué AIT</a>
+    <a href="#contacto">Contacto</a>
   </div>
 </nav>
 
@@ -477,7 +530,7 @@
               <strong>Oferta bienvenida:</strong> 17,50€ en tu primer evento (50% DTO).
             </div>
             <ul class="card-features">
-              <li>1 evento completo (sin límite de días)</li>
+              <li>1 evento completo (hasta 7 días)</li>
               <li>Trabajadores sin límite, sin coste extra</li>
               <li>Gestión de Depósito / COLAB</li>
               <li>Exportación a CSV al terminar</li>
@@ -708,6 +761,20 @@
 </footer>
 
 <script>
+  const siteNav = document.getElementById('site-nav');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function setMenuOpen(open) {
+    siteNav.classList.toggle('menu-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+    menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  }
+
+  menuToggle.addEventListener('click', () => setMenuOpen(!siteNav.classList.contains('menu-open')));
+  mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenuOpen(false)));
+  window.addEventListener('resize', () => { if (window.innerWidth > 880) setMenuOpen(false); });
+
   const contactForm = document.getElementById('contact-form');
   const formStatus = contactForm.querySelector('.form-status');
   const submitBtn = contactForm.querySelector('.btn.solid');
